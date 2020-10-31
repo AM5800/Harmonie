@@ -15,6 +15,23 @@ class StudyWidget extends StatelessWidget {
       appBar: AppBar(
         title: Text("Test study"),
       ),
+      body: getBody(),
+    );
+  }
+
+  getBody() {
+    return ValueListenableBuilder(
+      valueListenable: _studyVm.currentCardVm,
+      builder: (context, vm, child) {
+        if (vm == null) return Container();
+
+        var cardWidget = _cardWidgetFactories
+            .map((f) => f.tryGetStudyWidget(vm))
+            .where((widget) => widget != null)
+            .single;
+
+        return cardWidget;
+      },
     );
   }
 }

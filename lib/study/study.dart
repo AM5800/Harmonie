@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:harmonie/cards/card.dart';
+import 'package:harmonie/study/card_study_result.dart';
 
 class Study {
   final Queue<Card> _cards;
@@ -13,8 +14,8 @@ class Study {
     return _cards.first;
   }
 
-  // TODO: results enum?
-  void submitResult() {
+  void submitResult(CardStudyResult result) {
+    // TODO: handle result
     assert(hasCard());
     Card card = currentCard;
     // TODO: do something with the card

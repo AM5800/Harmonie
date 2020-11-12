@@ -1,8 +1,10 @@
+import 'dart:math';
+
 class CardId {
   final String id;
-  final String cardType; // TODO: maybe this should be Type?
+  final String factoryId; // TODO: maybe this should be Type?
 
-  CardId(this.id, this.cardType);
+  CardId(this.id, this.factoryId);
 
   @override
   bool operator ==(Object other) =>
@@ -10,14 +12,20 @@ class CardId {
       other is CardId &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          cardType == other.cardType;
+          factoryId == other.factoryId;
 
   @override
-  int get hashCode => id.hashCode ^ cardType.hashCode;
+  int get hashCode => id.hashCode ^ factoryId.hashCode;
 }
+
+abstract class Exercise {}
+
+abstract class ExerciseVm {}
 
 abstract class Card {
   CardId get id;
+
+  Exercise getExercise(Random random);
 }
 
 class CardVm {}

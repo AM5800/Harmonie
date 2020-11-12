@@ -3,17 +3,18 @@ import 'package:harmonie/study/study_vm.dart';
 
 import 'card.dart';
 
-abstract class CardWidgetFactory {
-  Widget tryGetStudyWidget(CardVm vm);
+abstract class ExerciseWidgetFactory {
+  Widget tryGetWidgetForStudy(ExerciseVm vm);
 }
 
 abstract class CardFactory {
   Iterable<String> getSupportedCardTypes();
 
   Card tryGetCard(CardId id);
+
+  Iterable<Card> getAllCards();
 }
 
-abstract class CardVmFactory {
-  // TODO: unify interfaces of factories
-  CardVm tryGetStudyVm(Card card, StudyVm studyVm);
+abstract class ExerciseVmFactory {
+  ExerciseVm tryGetVmForStudy(Exercise exercise, StudyVm studyVm);
 }

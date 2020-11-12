@@ -1,6 +1,5 @@
-import 'package:harmonie/study/card_study_result.dart';
-
-import 'study_vm.dart';
+import 'package:harmonie/common/card_study_result.dart';
+import 'package:harmonie/study/study_vm.dart';
 
 class SelfResultButtonVm {
   final Function() onClick;

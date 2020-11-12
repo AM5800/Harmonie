@@ -5,7 +5,7 @@ import 'study_vm.dart';
 
 class StudyWidget extends StatelessWidget {
   final StudyVm _studyVm;
-  final List<CardWidgetFactory> _cardWidgetFactories;
+  final List<ExerciseWidgetFactory> _cardWidgetFactories;
 
   StudyWidget(this._studyVm, this._cardWidgetFactories);
 
@@ -21,12 +21,12 @@ class StudyWidget extends StatelessWidget {
 
   getBody() {
     return ValueListenableBuilder(
-      valueListenable: _studyVm.currentCardVm,
+      valueListenable: _studyVm.currentExercise,
       builder: (context, vm, child) {
         if (vm == null) return Container();
 
         var cardWidget = _cardWidgetFactories
-            .map((f) => f.tryGetStudyWidget(vm))
+            .map((f) => f.tryGetWidgetForStudy(vm))
             .where((widget) => widget != null)
             .single;
 

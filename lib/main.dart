@@ -1,25 +1,21 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:harmonie/cards/exercises/rich_text_exercise_vm.dart';
+import 'package:harmonie/cards/exercises/rich_text_exercise_widget.dart';
+import 'package:harmonie/cards/simple_sentence/german/hardcoded_german_verbs.dart';
 
 import 'cards/abstract_factories.dart';
-import 'cards/card.dart';
-import 'cards/simple/simple_card.dart';
-import 'cards/simple/simple_card_vm.dart';
-import 'cards/simple/simple_card_widget.dart';
 import 'study/study.dart';
 import 'study/study_vm.dart';
 import 'study/study_widget.dart';
 
 void main() {
-  var factory = SimpleCardFactory();
-  var cards = [
-    factory.tryGetCard(CardId("temp1", SimpleCard.cardType)),
-    factory.tryGetCard(CardId("temp2", SimpleCard.cardType))
-  ];
+  var factory = HardcodedGermanVerbFactory();
+  var cards = factory.getAllCards();
 
-  var vmFactories = [SimpleCardVmFactory()];
-  var widgetFactories = [SimpleCardWidgetFactory()];
+  var vmFactories = [RichTextExerciseVmFactory()];
+  var widgetFactories = [RichTextExerciseWidgetFactory()];
   var study = Study(Queue.from(cards));
   var studyVm = StudyVm(study, vmFactories);
   runApp(MyApp(studyVm, widgetFactories));
@@ -27,7 +23,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final StudyVm _study;
-  final List<CardWidgetFactory> _widgetFactories;
+  final List<ExerciseWidgetFactory> _widgetFactories;
 
   MyApp(this._study, this._widgetFactories);
 

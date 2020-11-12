@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:harmonie/study/self_result_vm.dart';
+import 'package:harmonie/common/self_result_vm.dart';
 
 import 'card_study_result.dart';
 

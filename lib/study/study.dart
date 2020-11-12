@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:harmonie/cards/card.dart';
-import 'package:harmonie/study/card_study_result.dart';
+import 'package:harmonie/common/card_study_result.dart';
 
 class Study {
   final Queue<Card> _cards;

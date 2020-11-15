@@ -23,7 +23,7 @@ Widget makeButton(SelfResultButtonVm vm, String title, Color backgroundColor) {
           child: Column(
             children: [
               Text(
-                formatDuration(vm.repeatIn),
+                formatDuration(vm.dueInterval),
                 style: foreground,
               ),
               Text(

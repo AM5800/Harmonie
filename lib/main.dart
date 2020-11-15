@@ -19,7 +19,7 @@ void main() {
     logStatements: true,
   ));
   final db = MoorDatabase(executor);
-  final scheduler = Scheduler(db.scheduleDao);
+  final scheduler = Scheduler(db.attemptsDao);
 
   var factory = HardcodedGermanVerbFactory();
   var cards = factory.getAllCards().toList();

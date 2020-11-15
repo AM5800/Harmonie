@@ -1,24 +1,23 @@
 import 'package:harmonie/cards/card.dart';
-import 'package:harmonie/common/card_study_result.dart';
 import 'package:moor/moor.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 
 part 'db.g.dart';
 
-class Schedules extends Table {
+class Attempts extends Table {
   TextColumn get cardId => text()();
 
   DateTimeColumn get scheduledAt => dateTime()();
 
   DateTimeColumn get attemptedAt => dateTime()();
 
-  IntColumn get attemptResult => intEnum<CardStudyResult>()();
+  IntColumn get level => integer()();
 
   @override
   Set<Column> get primaryKey => {cardId};
 }
 
-@UseMoor(tables: [Schedules], daos: [ScheduleDao])
+@UseMoor(tables: [Attempts], daos: [AttemptsDao])
 class MoorDatabase extends _$MoorDatabase {
   MoorDatabase(QueryExecutor e) : super(e);
 
@@ -26,30 +25,30 @@ class MoorDatabase extends _$MoorDatabase {
   int get schemaVersion => 1;
 }
 
-@UseDao(tables: [Schedules])
-class ScheduleDao extends DatabaseAccessor<MoorDatabase>
-    with _$ScheduleDaoMixin {
-  ScheduleDao(MoorDatabase db) : super(db);
+@UseDao(tables: [Attempts])
+class AttemptsDao extends DatabaseAccessor<MoorDatabase>
+    with _$AttemptsDaoMixin {
+  AttemptsDao(MoorDatabase db) : super(db);
 
-  Future upsert(CardId card, DateTime scheduleAt, CardStudyResult result) {
+  Future upsert(CardId card, DateTime scheduleAt, int level) {
     final now = DateTime.now();
-    final s = Schedule(
+    final s = Attempt(
         cardId: card.toString(),
         scheduledAt: scheduleAt,
         attemptedAt: now,
-        attemptResult: result);
-    return into(schedules).insert(s, mode: InsertMode.insertOrReplace);
+        level: level);
+    return into(attempts).insert(s, mode: InsertMode.insertOrReplace);
   }
 
-  Future<Schedule> getLastAttempt(CardId cardId) async {
-    final attempts = await (select(schedules)
+  Future<Attempt> getLastAttempt(CardId cardId) async {
+    final cardAttempts = await (select(attempts)
           ..where((tbl) => tbl.cardId.equals(cardId.toString())))
         .get();
 
-    assert(attempts.length <= 1);
+    assert(cardAttempts.length <= 1);
 
-    if (attempts.length == 0) return null;
+    if (cardAttempts.length == 0) return null;
 
-    return attempts.first;
+    return cardAttempts.first;
   }
 }

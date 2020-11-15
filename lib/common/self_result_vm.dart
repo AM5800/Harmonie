@@ -4,9 +4,9 @@ import 'package:harmonie/study/study_vm.dart';
 class SelfResultButtonVm {
   final Function() onClick;
   final CardStudyResult result;
-  final Duration repeatIn;
+  final Duration dueInterval;
 
-  SelfResultButtonVm(this.onClick, this.result, this.repeatIn);
+  SelfResultButtonVm(this.onClick, this.result, this.dueInterval);
 }
 
 class SelfResultVm {
@@ -18,8 +18,8 @@ class SelfResultVm {
   static Future<SelfResultButtonVm> resultToVm(
       CardStudyResult result, StudyVm study) async {
     final onClick = () => study.submitResult(result);
-    final repeatIn = await study.estimateNextInterval(result);
-    return SelfResultButtonVm(onClick, result, repeatIn);
+    final dueInterval = await study.estimateDueInterval(result);
+    return SelfResultButtonVm(onClick, result, dueInterval);
   }
 
   static SelfResultVm fromEnum(

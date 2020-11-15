@@ -31,8 +31,8 @@ class Study {
     return _cards.isNotEmpty;
   }
 
-  Future<Duration> estimateNextInterval(CardStudyResult result) {
+  Future<Duration> estimateDueInterval(CardStudyResult result) {
     assert(hasCard());
-    return _scheduler.estimateNextInterval(result, currentCard.id);
+    return _scheduler.estimateDueInterval(result, currentCard.id);
   }
 }

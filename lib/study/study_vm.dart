@@ -39,7 +39,7 @@ class StudyVm {
     _nextCard();
   }
 
-  Future<Duration> estimateNextInterval(CardStudyResult result) {
-    return _study.estimateNextInterval(result);
+  Future<Duration> estimateDueInterval(CardStudyResult result) {
+    return _study.estimateDueInterval(result);
   }
 }

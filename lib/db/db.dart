@@ -12,7 +12,7 @@ class Schedules extends Table {
 
   DateTimeColumn get attemptedAt => dateTime()();
 
-  IntColumn get attemptResult => integer()();
+  IntColumn get attemptResult => intEnum<CardStudyResult>()();
 
   @override
   Set<Column> get primaryKey => {cardId};
@@ -52,28 +52,4 @@ class ScheduleDao extends DatabaseAccessor<MoorDatabase>
 
     return attempts.first;
   }
-
-// Future<List<Activity>> getActivities(FitDateTime date) {
-//   return (select(activities)
-//     ..where((tbl) =>
-//         tbl.start.isBetweenValues(date.todayStart, date.todayEnd)))
-//       .get();
-// }
-//
-// Stream<List<Activity>> watchActivities(FitDateTime date) {
-//   // TODO: do we need to take into account activities that cross day border?
-//   return (select(activities)
-//     ..where((tbl) =>
-//         tbl.start.isBetweenValues(date.todayStart, date.todayEnd)))
-//       .watch();
-// }
-//
-// Future<int> upsertActivity(Activity activity) {
-//   assert(activity.start.isUtc);
-//   assert(activity.end.isUtc);
-//   return into(activities).insert(activity, mode: InsertMode.insertOrReplace);
-// }
-//
-// Future deleteActivity(int id) =>
-//     (delete(activities)..where((tbl) => tbl.id.equals(id))).go();
 }

@@ -51,6 +51,24 @@ RichText toRichText(String str, BuildContext context) {
   );
 }
 
+Widget splitScreen(Widget topExpanded, Widget bottomBar) {
+  return Container(
+    width: double.infinity,
+    child: Column(children: [
+      Expanded(
+        child: Container(
+          alignment: Alignment.topLeft,
+          child: Padding(padding: EdgeInsets.all(10), child: topExpanded),
+        ),
+      ),
+      Container(
+        width: double.infinity,
+        child: bottomBar,
+      )
+    ]),
+  );
+}
+
 class RichTextExerciseWidget extends StatelessWidget {
   final RichTextExerciseVm _vm;
 
@@ -62,26 +80,23 @@ class RichTextExerciseWidget extends StatelessWidget {
         valueListenable: _vm.canShowAnswer,
         builder: (context, canShowAnswer, child) {
           if (canShowAnswer) {
-            return Column(children: [
-              toRichText(_vm.exercise.frontUncovered, context),
-              toRichText(_vm.exercise.back, context),
-              SelfResultWidget(_vm.selfResultVm),
-            ]);
+            return splitScreen(
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  toRichText(_vm.exercise.frontUncovered, context),
+                  Divider(),
+                  toRichText(_vm.exercise.back, context),
+                ]),
+                SelfResultWidget(_vm.selfResultVm));
           }
 
-          return Container(
-            width: double.infinity,
-            child: Column(children: [
-              Expanded(
-                child: Container(
-                  child: toRichText(_vm.exercise.front, context),
-                ),
-                flex: 3,
-              ),
+          return splitScreen(
+              toRichText(_vm.exercise.front, context),
               RaisedButton(
-                  onPressed: () => _vm.showAnswer(), child: Text("Show Answer"))
-            ]),
-          );
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  shape:
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  onPressed: () => _vm.showAnswer(),
+                  child: Text("SHOW ANSWER")));
         });
   }
 }

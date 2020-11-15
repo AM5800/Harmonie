@@ -15,21 +15,24 @@ String formatDuration(Duration duration) {
 
 Widget makeButton(SelfResultButtonVm vm, String title, Color backgroundColor) {
   final foreground = TextStyle(color: Colors.white);
-  return FlatButton(
-      onPressed: vm.onClick,
-      child: Column(
-        children: [
-          Text(
-            formatDuration(vm.repeatIn),
-            style: foreground,
+  return Expanded(
+      child: FlatButton(
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          onPressed: vm.onClick,
+          child: Column(
+            children: [
+              Text(
+                formatDuration(vm.repeatIn),
+                style: foreground,
+              ),
+              Text(
+                title,
+                style: foreground,
+              )
+            ],
           ),
-          Text(
-            title,
-            style: foreground,
-          )
-        ],
-      ),
-      color: backgroundColor);
+          color: backgroundColor));
 }
 
 class SelfResultWidget extends StatelessWidget {
@@ -44,6 +47,7 @@ class SelfResultWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:
                 snapshot.data.map((vm) => _toWidget(vm, context)).toList(),
           );

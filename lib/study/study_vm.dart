@@ -38,4 +38,8 @@ class StudyVm {
     _study.submitResult(result);
     _nextCard();
   }
+
+  Future<Duration> estimateNextInterval(CardStudyResult result) {
+    return _study.estimateNextInterval(result);
+  }
 }

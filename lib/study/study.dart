@@ -2,12 +2,14 @@ import 'dart:collection';
 
 import 'package:harmonie/cards/card.dart';
 import 'package:harmonie/common/card_study_result.dart';
+import 'package:harmonie/scheduling/scheduler.dart';
 
 class Study {
   final Queue<Card> _cards;
+  final Scheduler _scheduler;
 
   // TODO: ctor should accept iterable
-  Study(this._cards);
+  Study(this._cards, this._scheduler);
 
   Card get currentCard {
     assert(hasCard());
@@ -15,14 +17,22 @@ class Study {
   }
 
   void submitResult(CardStudyResult result) {
-    // TODO: handle result
     assert(hasCard());
     Card card = currentCard;
-    // TODO: do something with the card
     _cards.removeFirst();
+
+    // TODO: async?
+    _scheduler.schedule(result, card.id);
+
+    if (result == CardStudyResult.AGAIN) _cards.add(card);
   }
 
   bool hasCard() {
     return _cards.isNotEmpty;
+  }
+
+  Future<Duration> estimateNextInterval(CardStudyResult result) {
+    assert(hasCard());
+    return _scheduler.estimateNextInterval(result, currentCard.id);
   }
 }

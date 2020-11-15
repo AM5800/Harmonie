@@ -15,6 +15,11 @@ class CardId {
           factoryId == other.factoryId;
 
   @override
+  String toString() {
+    return "$id;$factoryId";
+  }
+
+  @override
   int get hashCode => id.hashCode ^ factoryId.hashCode;
 }
 

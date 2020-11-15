@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:harmonie/cards/exercises/rich_text_exercise_vm.dart';
 import 'package:harmonie/cards/exercises/rich_text_exercise_widget.dart';
 import 'package:harmonie/cards/simple_sentence/german/hardcoded_german_verbs.dart';
+import 'package:harmonie/db/db.dart';
+import 'package:harmonie/scheduling/scheduler.dart';
+import 'package:moor_flutter/moor_flutter.dart';
 
 import 'cards/abstract_factories.dart';
 import 'study/study.dart';
@@ -11,12 +14,19 @@ import 'study/study_vm.dart';
 import 'study/study_widget.dart';
 
 void main() {
+  final executor = (FlutterQueryExecutor.inDatabaseFolder(
+    path: 'test1.db',
+    logStatements: true,
+  ));
+  final db = MoorDatabase(executor);
+  final scheduler = Scheduler(db.scheduleDao);
+
   var factory = HardcodedGermanVerbFactory();
-  var cards = factory.getAllCards();
+  var cards = factory.getAllCards().toList();
 
   var vmFactories = [RichTextExerciseVmFactory()];
   var widgetFactories = [RichTextExerciseWidgetFactory()];
-  var study = Study(Queue.from(cards));
+  var study = Study(Queue.from(cards), scheduler);
   var studyVm = StudyVm(study, vmFactories);
   runApp(MyApp(studyVm, widgetFactories));
 }

@@ -136,7 +136,7 @@ class VerbPrepositionCard implements Card {
 }
 
 class HardcodedGermanVerbFactory implements CardFactory {
-  static final String Id = "HardcodedGermanVerbFactory";
+  static const String Id = "HardcodedGermanVerbFactory";
   final Map<CardId, Card> _cards = LinkedHashMap();
 
   HardcodedGermanVerbFactory() {

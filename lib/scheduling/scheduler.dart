@@ -13,7 +13,7 @@ class Scheduler {
 
     // TODO: make all this stuff configurable once the algorithm is settled
     if (lastAttempt == null ||
-        lastAttempt.attemptResult == CardStudyResult.AGAIN.index) {
+        lastAttempt.attemptResult == CardStudyResult.AGAIN) {
       switch (result) {
         case CardStudyResult.AGAIN:
           return Duration(minutes: 5);

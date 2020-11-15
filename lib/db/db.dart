@@ -37,7 +37,7 @@ class ScheduleDao extends DatabaseAccessor<MoorDatabase>
         cardId: card.toString(),
         scheduledAt: scheduleAt,
         attemptedAt: now,
-        attemptResult: result.index);
+        attemptResult: result);
     return into(schedules).insert(s, mode: InsertMode.insertOrReplace);
   }
 

@@ -15,7 +15,7 @@ import 'study/study_widget.dart';
 
 void main() {
   final executor = (FlutterQueryExecutor.inDatabaseFolder(
-    path: 'test1.db',
+    path: 'test.db',
     logStatements: true,
   ));
   final db = MoorDatabase(executor);

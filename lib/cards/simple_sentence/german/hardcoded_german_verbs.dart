@@ -99,20 +99,20 @@ class VerbPrepositionCard implements Card {
   Exercise getExercise(Random random) {
     final sentence = _sentences[random.nextInt(_sentences.length)];
 
-    final splitted1 = sentence.de.split(" ").toList();
-
-    for (final index in sentence.verbIndices) {
-      splitted1[index] = "<accent>${splitted1[index]}</accent>";
-    }
-
-    final splitted2 = splitted1.toList();
+    final frontUncoveredSplitted = sentence.de.split(" ").toList();
+    final frontSplitted = frontUncoveredSplitted.toList();
 
     for (final index in sentence.prepositionIndices) {
-      splitted2[index] = "<accent>[preposition]</accent>";
+      frontUncoveredSplitted[index] =
+          "<accent>${frontUncoveredSplitted[index]}</accent>";
     }
 
-    final String front = splitted2.join(" ");
-    final String frontUncovered = splitted1.join(" ");
+    for (final index in sentence.prepositionIndices) {
+      frontSplitted[index] = "<accent>[preposition]</accent>";
+    }
+
+    final String front = frontSplitted.join(" ");
+    final String frontUncovered = frontUncoveredSplitted.join(" ");
     final String back = "${sentence.en}\n$_case";
 
     return RichTextExercise(

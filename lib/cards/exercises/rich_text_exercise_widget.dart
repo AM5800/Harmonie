@@ -91,12 +91,16 @@ class RichTextExerciseWidget extends StatelessWidget {
 
           return splitScreen(
               toRichText(_vm.exercise.front, context),
-              RaisedButton(
+              FlatButton(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   shape:
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   onPressed: () => _vm.showAnswer(),
-                  child: Text("SHOW ANSWER")));
+                  color: Colors.grey,
+                  child: Text(
+                    "SHOW ANSWER",
+                    style: TextStyle(color: Colors.white),
+                  )));
         });
   }
 }

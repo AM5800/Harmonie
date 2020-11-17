@@ -65,7 +65,7 @@ class SelfResultWidget extends StatelessWidget {
       case CardStudyResult.AGAIN:
         return makeButton(vm, "AGAIN", theme.errorColor);
       case CardStudyResult.OK:
-        return makeButton(vm, "OK", theme.buttonColor);
+        return makeButton(vm, "OK", Colors.grey);
       case CardStudyResult.GOOD:
         return makeButton(vm, "GOOD", theme.accentColor);
     }

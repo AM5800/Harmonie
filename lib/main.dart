@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:harmonie/cards/exercises/choice_exercise_vm.dart';
+import 'package:harmonie/cards/exercises/choice_exercise_widget.dart';
 import 'package:harmonie/cards/exercises/rich_text_exercise_vm.dart';
 import 'package:harmonie/cards/exercises/rich_text_exercise_widget.dart';
 import 'package:harmonie/cards/simple_sentence/german/hardcoded_german_verbs.dart';
@@ -24,8 +26,11 @@ void main() {
   var factory = HardcodedGermanVerbFactory();
   var cards = factory.getAllCards().toList();
 
-  var vmFactories = [RichTextExerciseVmFactory()];
-  var widgetFactories = [RichTextExerciseWidgetFactory()];
+  var vmFactories = [RichTextExerciseVmFactory(), ChoiceExerciseVmFactory()];
+  var widgetFactories = [
+    RichTextExerciseWidgetFactory(),
+    ChoiceExerciseWidgetFactory()
+  ];
   var study = Study(Queue.from(cards), scheduler);
   var studyVm = StudyVm(study, vmFactories);
   runApp(MyApp(studyVm, widgetFactories));

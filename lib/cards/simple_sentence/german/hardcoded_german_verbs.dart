@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:harmonie/cards/abstract_factories.dart';
 import 'package:harmonie/cards/card.dart';
+import 'package:harmonie/cards/exercises/choice_exercise.dart';
 import 'package:harmonie/cards/exercises/rich_text_exercise.dart';
 import 'package:harmonie/common/card_study_result.dart';
+import 'package:tuple/tuple.dart';
 
 enum GermanCase { Nominativ, Accusativ, Dativ, Genitiv }
 
@@ -90,11 +92,13 @@ class VerbMeaningCard implements Card {
 
 class VerbPrepositionCard implements Card {
   final String _id;
+  final String _preposition;
   final List<VerbMeaningCard> dependsOn;
   final List<VerbPrepositionSentence> _sentences;
   final GermanCase _case;
 
-  VerbPrepositionCard(this._id, this.dependsOn, this._sentences, this._case);
+  VerbPrepositionCard(
+      this._id, this._preposition, this.dependsOn, this._sentences, this._case);
 
   Exercise getExercise(Random random) {
     final sentence = _sentences[random.nextInt(_sentences.length)];
@@ -115,8 +119,10 @@ class VerbPrepositionCard implements Card {
     final String frontUncovered = frontUncoveredSplitted.join(" ");
     final String back = "${sentence.en}\n$_case";
 
-    return RichTextExercise(
-        front, frontUncovered, back, CardStudyResult.values);
+    return ChoiceExercise(front, frontUncovered, back, [
+      Tuple2(_preposition, CardStudyResult.OK),
+      Tuple2("Obviously wrong", CardStudyResult.AGAIN)
+    ]);
   }
 
   @override
@@ -124,12 +130,14 @@ class VerbPrepositionCard implements Card {
 
   static VerbPrepositionCard sichSpezialisierenAuf = VerbPrepositionCard(
       "sich_spezialisieren_auf",
+      "auf",
       [VerbMeaningCard.sichSpezialisierenAuf],
       VerbPrepositionSentence.sichSpezialisierenAuf,
       GermanCase.Accusativ);
 
   static VerbPrepositionCard arbeitenAn = VerbPrepositionCard(
       "arbeiten_an",
+      "an",
       [VerbMeaningCard.arbeitenAn],
       VerbPrepositionSentence.arbeitenAn,
       GermanCase.Dativ);
